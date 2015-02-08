@@ -2,7 +2,6 @@
 # Imports
 ############################################################
 
-# Include your imports here, if any are used.
 import random
 import copy
 import math
