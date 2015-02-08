@@ -34,7 +34,7 @@ def n_queens_valid(board):
         ctr += 1
     return True
 
-
+#DFS based N-queens solution
 def n_queens_solutions(n):
     solutions = [[]]
     for row in xrange(n):
@@ -192,13 +192,18 @@ def is_solved_identical(dm):
             return False
         i -= 1
     return True
-
-def solve_identical_disks(length, n):
-    #Disk numbers starting from 1
-    initialDisks = [1 for i in xrange(n)]
-    #fill empty slots with 0
-    for i in xrange(length - n):
-        initialDisks.append(0)
+    
+#Problem Representation [diskId, diskId, diskId, 0, 0 ..]
+def solve_identical_disks(length, n, initial_distinct_disk = []):
+    initialDisk = []
+    if initial_distinct_disk == []:
+        #Disk numbers starting from 1
+        initialDisks = [1 for i in xrange(n)]
+        #fill empty slots with 0
+        for i in xrange(length - n):
+            initialDisks.append(0)
+    else:
+        initialDisk = initial_distinct_disk
     dm = DiskMovement(initialDisks, length, n)
     moves = {}
     parent = {}
@@ -243,42 +248,11 @@ def is_solved_distinct(dm):
             diskId += 1
         return True
 
+#Problem Representation [diskId1, diskId2, diskId3, 0, 0 ..]
 def solve_distinct_disks(length, n):
     #Disk numbers starting from 1
     initialDisks = [i+1 for i in xrange(n)]
     #fill empty slots with 0
     for i in xrange(length - n):
         initialDisks.append(0)
-    dm = DiskMovement(initialDisks, length, n)
-    moves = {}
-    parent = {}
-    explored_set = set()
-    solution = []
-    parent[dm] = dm
-    moves[dm] = ()
-    q = []
-    if is_solved_distinct(dm):
-        return moves[dm]
-    q.append(dm)
-    explored_set.add(tuple(dm.disks))
-    while len(q) != 0:
-        diskInstance = q.pop(0)
-        if is_solved_distinct(diskInstance):
-            node = diskInstance
-            while(parent[node] != node):
-                solution.append(moves[node])
-                node = parent[node]
-            return list(reversed(solution))
-        for move, neighbor in diskInstance.successors():
-            if tuple(neighbor.disks) not in explored_set:
-                parent[neighbor] = diskInstance
-                moves[neighbor] = move
-                if is_solved_distinct(neighbor):
-                    node = neighbor
-                    while(parent[node] != node):
-                        solution.append(moves[node])
-                        node = parent[node]
-                    return list(reversed(solution))
-                q.append(neighbor)
-                explored_set.add(tuple(neighbor.disks))
-    return None
+    return solve_identical_disks(length, n, initialDisks)
