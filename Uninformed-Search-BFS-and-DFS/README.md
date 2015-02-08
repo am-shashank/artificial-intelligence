@@ -95,7 +95,7 @@ lights on the board are off.
 >>> p.is_solved()
 False
 
-* n the LightsOutPuzzle class, write a method copy(self) that returns a new LightsOutPuzzle
+* In the LightsOutPuzzle class, write a method copy(self) that returns a new LightsOutPuzzle
 object initialized with a deep copy of the current board. Changes made to the original puzzle should
 not be reflected in the copy, and vice versa.
 >>> p = create_puzzle(3, 3)
@@ -109,10 +109,9 @@ The second element of each successor should be a new LightsOutPuzzle object whos
 result of applying the corresponding move to the current board. The successors may be generated in
 whichever order is most convenient.
 
-p = create_puzzle(2, 2)
-for move, new_p in p.successors():
-    print move, new_p.get_board()
-
+>>> p = create_puzzle(2, 2)
+>>> for move, new_p in p.successors():
+        print move, new_p.get_board()
 (0,0) [[True, True], [True, False]]
 (0,1) [[True, True], [False, True]]
 (1,0) [[True, False], [True, True]]
