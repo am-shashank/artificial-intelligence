@@ -10,10 +10,12 @@ import math
 # Section 1: N-Queens
 ############################################################
 
+#Possible number of combinations of queens in every row and every column
 def num_placements_all(n):
     f = math.factorial
     return f(n*n) / f(n) / f(n*n-n)
-
+    
+#Better representation - Possible number of combinations of queens in every column (one in each row)
 def num_placements_one_per_row(n):
     return n**n
 
